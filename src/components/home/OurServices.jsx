@@ -3,7 +3,7 @@ import React from 'react';
 import serviceIcon from '../../assets/service.png'
 const OurServices = () => {
     return (
-        <div className='bg-secondary p-15'>
+        <div className='bg-secondary mx-30 rounded-2xl p-15'>
         <div className='space-y-10'>
 
         <div className='text-center space-y-2  text-[#DADADA]'>

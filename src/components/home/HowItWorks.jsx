@@ -3,7 +3,7 @@ import bokkingIcon from '../../assets/bookingicon.png';
 
 const HowItWorks = () => {
     return (
-        <section className="py-16 ">
+        <section className="py-16  ">
             <h2 className="text-2xl text-secondary font-bold mb-4 ms-17">How ZapShift Works</h2>
             <div className="max-w-6xl mx-auto px-4 ">
 
