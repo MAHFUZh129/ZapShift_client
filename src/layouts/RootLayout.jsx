@@ -5,7 +5,7 @@ import Navbar from '../components/shared/Navbar';
 
 const RootLayout = () => {
     return (
-        <div>
+        <div className='  bg-gray-100'>
             <Navbar />
             <Outlet /> 
             <Footer />
