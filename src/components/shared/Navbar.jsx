@@ -2,9 +2,20 @@ import React from 'react';
 import Logo from '../Logo';
 import { NavLink } from 'react-router';
 import { GoArrowUpRight } from "react-icons/go";
+import useAuth from '../../hooks/useAuth';
 
 
 const Navbar = () => {
+
+  const {user,logoutUser} = useAuth();
+
+  const hanleLogout = () => {
+    logoutUser()
+    .then(()=>{ })
+    .catch(error=>{
+      console.log(error);
+    }) 
+   }
 
     const nav =<>
     <li className=''><NavLink to={'/'}>Services</NavLink></li>
@@ -36,9 +47,27 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end ">
-    <NavLink className="btn mr-2 ">Sign In </NavLink>
-    <NavLink className="btn bg-primary ">Sign Up</NavLink>
-    <NavLink className="btn btn-circle bg-black "><GoArrowUpRight  className='text-primary stroke-1' size={22} />
+    {user ? (
+          <>
+            
+            <button onClick={hanleLogout} className="btn mr-2">
+              Logout
+            </button>
+            <NavLink to="/register" className="btn bg-primary">
+              Be a rider
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login" className="btn mr-2">
+              Sign In
+            </NavLink>
+            <NavLink to="/register" className="btn bg-primary">
+              Be a rider
+            </NavLink>
+          </>
+        )}
+    <NavLink to={'/contact'} className="btn btn-circle bg-black "><GoArrowUpRight  className='text-primary stroke-1' size={22} />
 </NavLink>
   </div>
 </div>
