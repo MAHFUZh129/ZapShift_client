@@ -3,7 +3,7 @@ import QuoteIcon from '../../../assets/reviewQuote.png';
 
 const ReviewCard = ({ review }) => {
 
-    console.log(review)
+    // console.log(review)
   const {
     userName,
     user_photoURL,

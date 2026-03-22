@@ -35,7 +35,7 @@ const Register = () => {
         axios.post(image_Api_Url, formData)
           .then((response) => {
             const imageUrl = response.data.data.display_url;
-            console.log("Image URL:", imageUrl);
+            // console.log("Image URL:", imageUrl);
 
             // 2. Update user profile with name and photo URL
             const updateProfile = {

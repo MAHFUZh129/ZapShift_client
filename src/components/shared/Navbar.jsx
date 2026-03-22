@@ -24,6 +24,7 @@ const Navbar = () => {
     <li className=''><NavLink to={'/pricing'}>Pricing</NavLink></li>
     <li className=''><NavLink to={'/blog'}>Blog</NavLink></li>
     <li className=''><NavLink to={'/contact'}>Contact</NavLink></li>
+    <li className=''><NavLink to={'/send-parcel'}>Send Parcel</NavLink></li>
     </>
 
     return (
@@ -62,7 +63,7 @@ const Navbar = () => {
             <NavLink to="/login" className="btn mr-2">
               Sign In
             </NavLink>
-            <NavLink to="/register" className="btn bg-primary">
+            <NavLink to="rider" className="btn bg-primary">
               Be a rider
             </NavLink>
           </>

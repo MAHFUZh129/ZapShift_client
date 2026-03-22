@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useForm } from "react-hook-form"
-import {  NavLink } from 'react-router';
+import {  NavLink, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import SocialLogin from './SocialLogin';
 
@@ -11,12 +11,16 @@ const Login = () => {
     formState: { errors }, }=useForm()
 
     const {loginUser}=useAuth()
+    const location = useLocation();
+    // console.log(location);
+    const navigate = useNavigate();
 
     const handleLogin=(data)=>{
         // console.log(data);
         loginUser(data.email,data.password)
         .then(result=>{
             const user = result.user;
+            navigate(location.state || '/')
             console.log('succcc',user);
         })
         .catch(error=>{

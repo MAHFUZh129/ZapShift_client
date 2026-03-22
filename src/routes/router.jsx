@@ -5,6 +5,9 @@ import Coverage from "../pages/Coverage";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import BeRider from "../pages/rider/BeRider";
+import PrivateRoute from "./privateRoute";
+import SendParcel from "../pages/SendParcel";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +17,16 @@ export const router = createBrowserRouter([
       {
        index:true,
        Component:Home
+      },
+      {
+        path:'rider',
+        element:<PrivateRoute><BeRider></BeRider></PrivateRoute>
+      },
+      {
+        path:'send-parcel',
+        element:<PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
+        loader:()=>fetch('/servicesCentre.json')
+
       },
       {
         path:"coverage",
