@@ -33,8 +33,8 @@ const DashboardLayout = () => {
             <div className="mx-auto flex min-h-[95vh] max-w-7xl overflow-hidden rounded-sm bg-[#efefef] shadow-2xl">
                 {/* Sidebar */}
                 <aside className="w-[250px] bg-white border-r border-gray-200 px-5 py-6">
-                    <div className="mb-5">
-                        <Logo></Logo>
+                    <div className="mb-5 hover:bg-gray-50 rounded-md">
+                        <NavLink  to={'/'}><Logo></Logo></NavLink>
                         <div className="border-t-1 border-gray-200 mt-5" />
                     </div>
 
