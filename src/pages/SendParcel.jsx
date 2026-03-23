@@ -1,5 +1,4 @@
-import React, { use } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 
 const SendParcel = () => {
@@ -12,6 +11,7 @@ const SendParcel = () => {
     // console.log(uniqueRegions);
 
     const districtByRegion = (region) =>{
+        
         const districts = regions.filter(r => r.region === region) 
         // console.log(districts); 
         const district = districts.map(d => d.district);
@@ -24,7 +24,7 @@ const SendParcel = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -32,15 +32,35 @@ const SendParcel = () => {
     },
   });
 
-  const parcelType = watch("parcelType");
-
-  const senderWarehouse = watch("senderWarehouse");
-  const receiverWarehouse = watch("receiverWarehouse");
+  const [parcelType,senderWarehouse,receiverWarehouse] = useWatch({control,
+    name: ["parcelType", "senderWarehouse", "receiverWarehouse"]
+  });
 
   const onSubmit = (data) => {
     console.log("Parcel Data:", data);
-  };
 
+    const isDocument = data.parcelType === "document";
+    const isSameDistrict = data.senderRegion === data.receiverRegion;
+    const parcelweight = parseFloat(data.parcelWeight)
+
+    let cost = 0;
+    if(isDocument){
+        cost = isSameDistrict ? 60 : 80;
+
+  }
+  else{
+    if(parcelweight < 3){
+      cost = isSameDistrict ? 110 : 150;
+    }
+    else{
+        const extrweight = parcelweight - 3;
+        cost = isSameDistrict ? 110 + extrweight * 40 : 150 + extrweight * 40 + 40
+
+    }
+  }
+
+  console.log("Calculated Cost:", cost);
+}
   return (
     <div className="min-h-screen bg-gray-200 py-10 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl p-8 shadow-sm">
@@ -152,7 +172,7 @@ const SendParcel = () => {
 
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">
-                      Sender Pickup Wire house
+                      Sender Pickup Warehouse
                     </label>
                     <select
                       {...register("senderWarehouse", {
