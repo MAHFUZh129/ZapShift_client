@@ -1,19 +1,21 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
 
 const SendParcel = () => {
 
+    const {user}= useAuth();
+
     const regions = useLoaderData()
-    // console.log(regions);
 
     const regionsDuplicate = regions.map(region => region.region);
     const uniqueRegions = [...new Set(regionsDuplicate)];
-    // console.log(uniqueRegions);
 
     const districtByRegion = (region) =>{
         
         const districts = regions.filter(r => r.region === region) 
-        // console.log(districts); 
         const district = districts.map(d => d.district);
         return district;
               
@@ -36,8 +38,9 @@ const SendParcel = () => {
     name: ["parcelType", "senderWarehouse", "receiverWarehouse"]
   });
 
+    const axiosSecure = useAxiosSecure();
   const onSubmit = (data) => {
-    console.log("Parcel Data:", data);
+    // console.log("Parcel Data:", data);
 
     const isDocument = data.parcelType === "document";
     const isSameDistrict = data.senderRegion === data.receiverRegion;
@@ -49,7 +52,7 @@ const SendParcel = () => {
 
   }
   else{
-    if(parcelweight < 3){
+    if(parcelweight <= 3){
       cost = isSameDistrict ? 110 : 150;
     }
     else{
@@ -59,7 +62,42 @@ const SendParcel = () => {
     }
   }
 
-  console.log("Calculated Cost:", cost);
+  Swal.fire({
+    title: "Are you sure?",
+    html: `
+      <p><strong>Parcel:</strong> ${data.parcelName}</p>
+      <p><strong>Type:</strong> ${data.parcelType}</p>
+      <p><strong>Delivery Cost:</strong> ৳${cost}</p>
+    `,
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Yes, confirm",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+    //    parcel save to database
+    axiosSecure.post('/parcels',data)
+    .then(res => {
+        console.log('Parcel saved:', res.data.message);
+    })
+    .catch(error => {
+        console.error('Error saving parcel:', error);
+    })
+
+
+
+   Swal.fire({
+      title: "Confirmed!",
+      text: "Your parcel booking has been confirmed.",
+      icon: "success",
+    });
+  }
+
+  })
+
+  
+
 }
   return (
     <div className="min-h-screen bg-gray-200 py-10 px-4">
@@ -157,6 +195,7 @@ const SendParcel = () => {
                     </label>
                     <input
                       type="text"
+                      defaultValue={user?.displayName}
                       placeholder="Sender Name"
                       {...register("senderName", {
                         required: "Sender name is required",
@@ -216,13 +255,18 @@ const SendParcel = () => {
 
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">
-                      Sender Contact No
+                      Sender Email
                     </label>
                     <input
-                      type="text"
-                      placeholder="Sender Contact No"
-                      {...register("senderContact", {
-                        required: "Sender contact number is required",
+                      type="email"
+                      defaultValue={user?.email}
+                      placeholder="Sender Email"
+                      {...register("senderEmail", {
+                        required: "Sender email is required",
+                        pattern: {
+                          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email address",
+                        },
                       })}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                     />
@@ -327,13 +371,17 @@ const SendParcel = () => {
 
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">
-                      Receiver Contact No
+                      Receiver Email
                     </label>
                     <input
-                      type="text"
-                      placeholder="Sender Contact No"
-                      {...register("receiverContact", {
-                        required: "Receiver contact number is required",
+                      type="email"
+                      placeholder="Receiver Email"
+                      {...register("receiverEmail", {
+                        required: "Receiver email is required",
+                        pattern: {
+                          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email address",
+                        },
                       })}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                     />
