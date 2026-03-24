@@ -39,6 +39,7 @@ const SendParcel = () => {
   });
 
     const axiosSecure = useAxiosSecure();
+
   const onSubmit = (data) => {
     // console.log("Parcel Data:", data);
 
@@ -61,6 +62,10 @@ const SendParcel = () => {
 
     }
   }
+
+  console.log('Calculated Cost:', cost);
+
+  data.cost = cost;
 
   Swal.fire({
     title: "Are you sure?",
@@ -96,7 +101,7 @@ const SendParcel = () => {
 
   })
 
-  
+  console.log("Parcel data:", data);
 
 }
   return (
