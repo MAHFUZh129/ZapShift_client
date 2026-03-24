@@ -18,7 +18,7 @@ const Loading = () => {
         </div>
 
         {/* Brand name */}
-        <h1 className="mt-10 text-4xl font-extrabold tracking-[0.3em] text-white">
+        <h1 className="mt-10 text-4xl font-extrabold text-white">
           ZAPSHIFT
         </h1>
 
