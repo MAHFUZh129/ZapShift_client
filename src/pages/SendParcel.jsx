@@ -1,5 +1,5 @@
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 const SendParcel = () => {
 
     const {user}= useAuth();
+    const navigate = useNavigate()
 
     const regions = useLoaderData()
 
@@ -84,6 +85,7 @@ const SendParcel = () => {
     //    parcel save to database
     axiosSecure.post('/parcels',data)
     .then(res => {
+      navigate('/dashboard/my-parcels')
         console.log('Parcel saved:', res.data.message);
     })
     .catch(error => {

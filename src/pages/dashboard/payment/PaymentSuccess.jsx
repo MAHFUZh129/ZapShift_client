@@ -1,8 +1,38 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 import { CheckCircle2, ArrowRight, PackageCheck } from "lucide-react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const PaymentSuccess = () => {
+
+    const [searchParams]=useSearchParams()
+    const sessionId = searchParams.get('session_id')
+    // console.log(sessionId)
+
+    const axiosSecure = useAxiosSecure()
+    // const[paymentInfo,setPaymentInfo] = useState({})
+
+    const {data: payments = {}} = useQuery({
+        queryKey: ['payments',sessionId ],
+        queryFn:  async()=>{                     
+            const res = await axiosSecure.patch(`/session-status?session_id=${sessionId}`);
+           console.log(res.data)
+            return res.data;
+        }
+    });
+
+    console.log(payments)
+    
+    // useEffect(()=>{
+    //     axiosSecure.patch(`/session-status?session_id=${sessionId}`)
+    //     .then(res=>{
+    //         console.log(res.data)
+    //         setPaymentInfo(res.data)
+    //     })
+
+    // },[sessionId,axiosSecure])
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-white via-[#f7fbe8] to-[#eef7d2] p-6 ">
       <div className="w-full max-w-2xl rounded-[32px] border border-white/60 bg-white/90 p-8 shadow-2xl backdrop-blur-md md:p-12">
@@ -40,11 +70,34 @@ const PaymentSuccess = () => {
               <p className="text-sm text-white/70">Tracking</p>
               <h3 className="mt-1 text-lg font-bold">Available Soon</h3>
             </div>
+            
           </div>
-
+ 
+            <div className="flex mt-5 gap-3">
+                
+            <div className="rounded-lg bg-primary/50 py-2 px-4">
+              <p className="text-md border-b border-dotted text-red-900">Transaction ID</p>
+              <h3 className="mt-1 text-[15px] font-bold">{payments.transactionId}</h3>
+            </div>
+            <div className="rounded-lg bg-primary/40 py-2 px-4">
+              <p className="text-md border-b border-dotted text-red-900">Tracking ID</p>
+              <h3 className="mt-1 text-[15px] font-bold">{payments.trackingId}</h3>
+            </div>
+            </div>
+            {/* <div className="flex mt-5 gap-3">
+                
+            <div className="rounded-lg bg-primary/50 py-2 px-4">
+              <p className="text-md border-b border-dotted text-red-900">Transaction ID</p>
+              <h3 className="mt-1 text-[15px] font-bold">{paymentInfo.transactionId}</h3>
+            </div>
+            <div className="rounded-lg bg-primary/40 py-2 px-4">
+              <p className="text-md border-b border-dotted text-red-900">Tracking ID</p>
+              <h3 className="mt-1 text-[15px] font-bold">{paymentInfo.trackingId}</h3>
+            </div>
+            </div> */}
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
-              to="/dashboard/myParcels"
+              to="/dashboard/my-parcels"
               className="inline-flex items-center justify-center rounded-2xl bg-secondary px-6 py-3 font-semibold text-white transition hover:scale-[1.02]"
             >
               Go to My Parcels

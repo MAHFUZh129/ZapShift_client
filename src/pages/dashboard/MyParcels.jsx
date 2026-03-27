@@ -13,12 +13,14 @@ const MyParcels = () => {
 
     const {data: parcels = [],isError,isLoading,refetch} = useQuery({
         queryKey: ['parcels', user?.email],
-        queryFn: async ()=>{
+        queryFn:  async()=>{                     
             const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
            
             return res.data;
         }
     });
+
+    // console.log(parcels)
 
     // handleDelete
     const handleDelete = async (id) => {
@@ -98,12 +100,12 @@ if (isError) {
           <tbody>
             {parcels.length > 0 ? (
               parcels.map((parcel, index) => (
-                <tr key={parcel._id} className="hover:bg-primary/60">
+                <tr key={parcel._id} className='hover:bg-primary/60'>
                   <td>{index + 1}</td>
                   <td  className='font-semibold'>{parcel.parcelName}</td>
                   <td>{parcel.parcelType}</td>
                   <td>{parcel.receiverName}</td>
-                  <td>{parcel.paymentStatus === "paid" ? "Paid" :(<button className="btn btn-sm btn-outline"><Link to={`/dashboard/my-payments/${parcel._id}`}>Pay</Link></button>)
+                  <td>{parcel.paymentStatus === "paid" ? <span className='text-primary  hover:text-white font-bold text-[16px]'>{parcel.paymentStatus}</span> :(<Link className="btn btn-sm btn-outline" to={`/dashboard/my-payments/${parcel._id}`}>Pay</Link>)
                     }
                     </td>
                   <td>৳ {parcel.cost}</td>
