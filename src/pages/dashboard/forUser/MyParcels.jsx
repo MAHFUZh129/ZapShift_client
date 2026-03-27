@@ -1,6 +1,6 @@
 import React from 'react';
-import useAuth from '../../hooks/useAuth';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { PenOff, SearchX, Trash2 } from 'lucide-react';
 import Swal from 'sweetalert2';

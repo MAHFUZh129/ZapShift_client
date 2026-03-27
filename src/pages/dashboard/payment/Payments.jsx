@@ -4,7 +4,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { CreditCard, Package, Mail, BadgeDollarSign } from 'lucide-react';
 
 
-const MyPayments = () => {
+const Payments = () => {
     const {parcelId} = useParams()
     const axiosSecure = useAxiosSecure();
 
@@ -148,4 +148,4 @@ const MyPayments = () => {
     );
 };
 
-export default MyPayments;
+export default Payments;

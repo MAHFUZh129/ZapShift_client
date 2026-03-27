@@ -24,7 +24,6 @@ const Navbar = () => {
     <li className=''><NavLink to={'/pricing'}>Pricing</NavLink></li>
     <li className=''><NavLink to={'/blog'}>Blog</NavLink></li>
     <li className=''><NavLink to={'/contact'}>Contact</NavLink></li>
-    <li className=''><NavLink to={'/send-parcel'}>Send Parcel</NavLink></li>
     {
       user && <li className=''><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
     }

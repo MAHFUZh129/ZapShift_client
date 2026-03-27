@@ -7,12 +7,13 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import BeRider from "../pages/rider/BeRider";
 import PrivateRoute from "./privateRoute";
-import SendParcel from "../pages/SendParcel";
+import SendParcel from "../pages/dashboard/forUser/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
-import MyParcels from "../pages/dashboard/MyParcels";
-import MyPayments from "../pages/dashboard/payment/MyPayments";
+import MyParcels from "../pages/dashboard/forUser/MyParcels";
+import MyPayments from "../pages/dashboard/payment/Payments";
 import PaymentCancel from "../pages/dashboard/payment/PaymentCancel";
 import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
+import PaymentHistory from "../pages/dashboard/forUser/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -27,12 +28,7 @@ export const router = createBrowserRouter([
         path:'rider',
         element:<PrivateRoute><BeRider></BeRider></PrivateRoute>
       },
-      {
-        path:'send-parcel',
-        element:<PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
-        loader:()=>fetch('/servicesCentre.json')
-
-      },
+      
       {
         path:"coverage",
         Component:Coverage,
@@ -65,6 +61,18 @@ export const router = createBrowserRouter([
       {
         path:'my-parcels',
         element:<PrivateRoute><MyParcels></MyParcels></PrivateRoute>
+      },
+      {
+        path:'send-parcel',
+        element:<PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
+        loader:()=>fetch('/servicesCentre.json')
+
+      },
+      {
+        path:'payment-history',
+        element:<PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>,
+        
+
       },
       {
         path:'my-payments/:parcelId',

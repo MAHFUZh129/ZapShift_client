@@ -10,8 +10,10 @@ import {
     User,
     ChevronDown,
     Package,
+    CreditCard,
+    Truck,
 } from "lucide-react";
-import MyParcels from "../pages/dashboard/MyParcels";
+import MyParcels from "../pages/dashboard/forUser/MyParcels";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
 import useAuth from "../hooks/useAuth";
@@ -49,13 +51,20 @@ const DashboardLayout = () => {
                             to="my-parcels"
 
                         ><Package size={18} />
-                            My parcels
+                            My Parcels
                         </NavLink>
                         <NavLink
-                            to="my"
+                            to="payment-history"
                             className={navLinkClass}
-                        >
-                            My parcels
+                        ><CreditCard size={18} />
+                            Payments History
+                        </NavLink>
+                        <NavLink
+                            to="send-parcel"
+                            className={navLinkClass}
+                        > 
+                        <Truck size={18} />
+                            Send Parcel
                         </NavLink>
 
 
